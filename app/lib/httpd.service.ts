@@ -1,0 +1,37 @@
+import restify = require('restify');
+
+export default class {
+    httpd: restify.Server;
+
+    constructor() {
+        restify.CORS.ALLOW_HEADERS.push('authorization');
+        this.httpd = restify.createServer();
+        this.httpd.use(restify.bodyParser({ mapParams: false }));
+        this.httpd.use(restify.queryParser()); // take care that it doesnt conflict with Alexa
+        this.httpd.use(restify.CORS());
+    }
+
+    serve(port: number = 3030) {
+        this.httpd.listen(port, () => {
+            console.log('%s listening at %s', this.httpd.name, this.httpd.url);
+        });     
+    }
+
+    post(route: any, callbackFunction: Function) {
+        this.httpd.post(route, (request: restify.Request, response: restify.Response, next: restify.Next) => {
+            this.postAction(request, response,  callbackFunction);
+            return next();            
+        });
+    }
+
+    async postAction(request: restify.Request, response: restify.Response, callbackFunction: Function) {
+        try {
+            let body: any = request.body;
+            var responseValue = await callbackFunction(body);
+            response.json(200, responseValue);
+        }
+        catch(error) {
+            response.json(400, error);
+        }
+    }
+}
