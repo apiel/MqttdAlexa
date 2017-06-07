@@ -1,6 +1,6 @@
 import Events = require('events');
 import Httpd from './lib/httpd.service';
-import { Mqttd, MqttdRoute } from './lib/mqttd.service';
+import Mqttd from './lib/mqttd.service';
 
 import AlexaService  from './alexa/alexa.service';
 

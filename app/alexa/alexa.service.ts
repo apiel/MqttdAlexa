@@ -1,11 +1,11 @@
-import Httpd from '../lib/httpd.service';
+import Mqttd from '../lib/mqttd.service';
 import moment = require("moment");
 
 // AMAZON.DURATION for timer
 // we could count how many time an undefined alexa key has been called
 
 export default class {
-    constructor(private httpd: Httpd) {}
+    constructor(private mqttd: Mqttd) {}
     
     call(body: any) {        
         console.log(JSON.stringify(body.request.intent.slots, null, 4));
