@@ -16,7 +16,7 @@ export default class {
         this.httpd.use(restify.CORS());
     }
 
-    serve(port: number = 3030) {
+    serve(port: number = 9999) {
         this.httpd.listen(port, () => {
             console.log('%s listening at %s', this.httpd.name, this.httpd.url);
         });     
