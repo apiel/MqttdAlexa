@@ -33,8 +33,7 @@ export default class {
     async postAction(request: restify.Request, response: restify.Response, callbackFunction: Function) {
         try {
             let body: any = request.body;
-console.log('request.params', request.params);
-            var responseValue = await callbackFunction(body);
+            var responseValue = await callbackFunction(body, request);
             response.json(200, responseValue);
         }
         catch(error) {
