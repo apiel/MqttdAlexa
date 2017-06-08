@@ -10,7 +10,7 @@ export default class {
         this.httpd = restify.createServer({
             key: fs.readFileSync('/etc/nginx/alexa/alexa-private-key.pem'),
             certificate: fs.readFileSync('/etc/nginx/alexa/ssl.pem'),  
-            log: console          
+//            log: console          
         });
         this.httpd.use(restify.bodyParser({ mapParams: false }));
         this.httpd.use(restify.queryParser()); // take care that it doesnt conflict with Alexa
@@ -33,6 +33,7 @@ export default class {
     async postAction(request: restify.Request, response: restify.Response, callbackFunction: Function) {
         try {
             let body: any = request.body;
+console.log('request.params', request.params);
             var responseValue = await callbackFunction(body);
             response.json(200, responseValue);
         }
