@@ -28,6 +28,8 @@ export default class {
 
     ready(callback: Function) {
         this.mqttd.on('ready', callback);
+        this.mqttd.on('clientConnected', (client: any) => console.log('Client Connected:', client.id));
+        this.mqttd.on('subscribed', (topic: string, client: any) => console.log('Client subscribed:', topic, client.id));
         return this;
     }
 }

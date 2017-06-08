@@ -14,6 +14,7 @@ export default class {
 
         let response: string = 'Ok';
         if (request.params && request.params.topic && request.params.value) {
+	    console.log('let publish in mqtt', request.params);
             this.mqttd.publish(request.params.value, request.params.topic, false);
         }
         else if (body.request.intent) {
