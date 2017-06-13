@@ -23,7 +23,8 @@ export default class {
                 let value: string = intent.slots.action.value;
                 if (intent.name === 'storeIntent') {
                     if (value === 'open' || value === 'close' || value === 'stop') {
-                        this.mqttd.publish(value, 'alex/-/-/store');
+                        // this.mqttd.publish(value, 'alex/-/-/store');
+                        this.mqttd.publish('http://192.168.0.30/' + value, 'alex/-/-/wget');
                     }
                     else {
                         response = 'Sorry, invalid action for this intent.'
