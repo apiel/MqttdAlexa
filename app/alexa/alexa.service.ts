@@ -24,7 +24,7 @@ export default class {
                 if (intent.name === 'storeIntent') {
                     if (value === 'open' || value === 'close' || value === 'stop') {
                         // this.mqttd.publish(value, 'alex/-/-/store');
-                        this.mqttd.publish('http://192.168.0.30/' + value, 'alex/-/-/wget');
+                        this.mqttd.publish('http://192.168.0.30/' + value + "\0", 'alex/-/-/wget');
                     }
                     else {
                         response = 'Sorry, invalid action for this intent.'
