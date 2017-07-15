@@ -6,15 +6,13 @@ export default class {
     httpd: restify.Server;
 
     constructor() {
-        // restify.CORS.ALLOW_HEADERS.push('authorization');
         this.httpd = restify.createServer({
             key: fs.readFileSync('/etc/nginx/alexa/alexa-private-key.pem'),
             certificate: fs.readFileSync('/etc/nginx/alexa/ssl.pem'),  
 //            log: console          
         });
         this.httpd.use(plugins.bodyParser({ mapParams: false }));
-        this.httpd.use(plugins.queryParser()); // take care that it doesnt conflict with Alexa
-        // this.httpd.use(restify.CORS());
+        // this.httpd.use(plugins.queryParser()); // take care that it doesnt conflict with Alexa
     }
 
     serve(port: number = 9999) {
