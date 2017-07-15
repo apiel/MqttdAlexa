@@ -12,7 +12,7 @@ export default class {
 //            log: console          
         });
         this.httpd.use(plugins.bodyParser({ mapParams: false }));
-        // this.httpd.use(plugins.queryParser()); // take care that it doesnt conflict with Alexa
+        this.httpd.use(plugins.queryParser()); // take care that it doesnt conflict with Alexa
     }
 
     serve(port: number = 9999) {

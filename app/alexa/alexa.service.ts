@@ -8,11 +8,12 @@ export default class {
     call(body: any, request: restify.Request) {       
         console.log('Alexa');  
         console.log(JSON.stringify(body.request, null, 4));
+        // console.log(JSON.stringify(request.query, null, 4));
 
         let response: string = 'Ok';
-        if (request.params && request.params.topic && request.params.value) {
-	    console.log('let publish in mqtt', request.params);
-            this.mqttClient.publish(request.params.topic, request.params.value);
+        if (request.query && request.query.topic && request.query.value) {
+	    console.log('let publish in mqtt', request.query);
+            this.mqttClient.publish(request.query.topic, request.query.value);
         }
         else if (body.request.intent) {
             let intent = body.request.intent;
