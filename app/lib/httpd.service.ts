@@ -1,4 +1,5 @@
 import * as restify from 'restify';
+import * as plugins from 'restify-plugins';
 import { fs } from 'mz';
 
 export default class {
@@ -11,8 +12,8 @@ export default class {
             certificate: fs.readFileSync('/etc/nginx/alexa/ssl.pem'),  
 //            log: console          
         });
-        // this.httpd.use(restify.bodyParser({ mapParams: false }));
-        // this.httpd.use(restify.queryParser()); // take care that it doesnt conflict with Alexa
+        this.httpd.use(plugins.bodyParser({ mapParams: false }));
+        this.httpd.use(plugins.queryParser()); // take care that it doesnt conflict with Alexa
         // this.httpd.use(restify.CORS());
     }
 
