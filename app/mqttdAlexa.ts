@@ -1,19 +1,14 @@
-import Events = require('events');
-import Httpd from './lib/httpd.service';
-import Mqttd from './lib/mqttd.service';
+import { connect } from 'mqtt';
 
+import Httpd from './lib/httpd.service';
 import AlexaService  from './alexa/alexa.service';
 
-const eventEmitter = new Events.EventEmitter();
+const httpd = new Httpd();
+const mqttClient = connect('mqtt://localhost');
 
-let httpd = new Httpd();
-let mqttd = new Mqttd();
-
-let alexaService = new AlexaService(mqttd);
+const alexaService = new AlexaService(mqttClient);
 httpd.post('/alexa', alexaService.call.bind(alexaService));
 
-mqttd.attachHttpServer(httpd.httpd);
-
-mqttd.ready(async () => {
+mqttClient.on('connect', async () => {
     httpd.serve();
 });

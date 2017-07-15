@@ -1,11 +1,11 @@
-import restify = require('restify');
+import * as restify from 'restify';
 let verifier = require('alexa-verifier');
 
 // could be use with server.use()
 
 export default (req: restify.Request, res: restify.Response, next: restify.Next) => {
-    let certUrl: string = req.headers.signaturecertchainurl;
-    let signature: string = req.headers.signature;
+    let certUrl: string = req.headers.signaturecertchainurl as string;
+    let signature: string = req.headers.signature as string;
     let body: string = JSON.stringify(req.body);
     
     verifier(certUrl, signature, body, (error: any) => {

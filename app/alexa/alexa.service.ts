@@ -1,12 +1,9 @@
-import Mqttd from '../lib/mqttd.service';
-import restify = require('restify');
-import moment = require("moment");
+import { Client } from 'mqtt';
 
-// AMAZON.DURATION for timer
-// we could count how many time an undefined alexa key has been called
+import * as restify from 'restify';
 
 export default class {
-    constructor(private mqttd: Mqttd) {}
+    constructor(private mqttClient: Client) {}
     
     call(body: any, request: restify.Request) {       
         console.log('Alexa');  
@@ -15,7 +12,7 @@ export default class {
         let response: string = 'Ok';
         if (request.params && request.params.topic && request.params.value) {
 	    console.log('let publish in mqtt', request.params);
-            this.mqttd.publish(request.params.value, request.params.topic, false);
+            this.mqttClient.publish(request.params.topic, request.params.value);
         }
         else if (body.request.intent) {
             let intent = body.request.intent;
@@ -23,8 +20,11 @@ export default class {
                 let value: string = intent.slots.action.value;
                 if (intent.name === 'storeIntent') {
                     if (value === 'open' || value === 'close' || value === 'stop') {
-                        // this.mqttd.publish(value, 'alex/-/-/store');
-                        this.mqttd.publish('http://192.168.0.30/' + value, 'alex/-/-/wget');
+                        this.mqttClient.publish(
+                            'alex/-/-/wget',
+                            'http://192.168.0.30/' + value,
+                            { retain: true }
+                        );
                     }
                     else {
                         response = 'Sorry, invalid action for this intent.'
