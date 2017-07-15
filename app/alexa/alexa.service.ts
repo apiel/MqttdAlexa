@@ -22,7 +22,7 @@ export default class {
                     if (value === 'open' || value === 'close' || value === 'stop') {
                         this.mqttClient.publish(
                             'alex/-/-/wget',
-                            'http://192.168.0.30/' + value,
+                            'http://192.168.0.30/' + value + "\0",
                             { retain: true }
                         );
                     }
