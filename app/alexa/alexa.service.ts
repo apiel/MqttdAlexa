@@ -24,7 +24,7 @@ export default class {
                         this.mqttClient.publish(
                             'alex/-/-/wget',
                             'http://192.168.0.30/' + value + "\0",
-                            { retain: true }
+                            { retain: false }
                         );
                     }
                     else {
